@@ -28,7 +28,7 @@ The requirements are:
 * After the number, any character (excepts a new number of course) is excepted
 * Bases must be in **one** line (without new line \n)
 
-_example:_
+_example:_  
 \>1\_chr1\_S288C\_R64\_  
 ATAGCTGTCGTAGCTGA(...)GCTGTGACTAGCTAGCATCG  
 \>2\_chr2\_S288C\_R64\_  
@@ -103,7 +103,7 @@ It will return the following format:
 
 **_Important!_**  
 One has to detach the permanently loaded memory by using this command:  
-./Detach_Table -gw303
+./Detach_Memory -gw303
 
 
 
