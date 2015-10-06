@@ -36,7 +36,7 @@ ATACGTCGACTGGCTAG(...)CCCGTATGCGAGCTACGCGC
 
 The new line characters can be deleted by the following
 terminal command:  
-tr -d '\n' < genome_sequence.txt/fasta > genome_sequence_without_new_lines.txt  
+tr -d '\n' < genome\_sequence.txt/fasta \> genome\_sequence\_without\_new\_lines.txt  
 However, new lines after chromosome headers need to be updated either manually or
 by an appropriate command. Also, the numbers after '>' have to be written manually
 or by another command. In this case, it was done manually because there was only one
@@ -53,9 +53,59 @@ tables of all possible hits separated by the according PAM (NGG, NAG, NNNNACA or
 an assigned value called data.bin and index.bin. Those files can be used in future if using the
 same genome.  
 In order to create those files, the following command is used:  
-./Table_Creation -i /input_path/full_genome.txt -o /same_folder/Off-Spotter_bin/  
+./Table\_Creation -i /input\_path/full\_genome.txt -o /same\_folder/Off-Spotter\_bin/  
 _This progress will need something around 24GB of memory!_
 
-### IV. Loading the Memory and Start a Query
+### IV. Loading the Memory
+
+./Load\_Memory -t /folder\_name\_of\_bin\_files/ -g w303  
+w303 is the name of the used genome. So far, the program doesn't allow any other name than
+one of the four implemented genomes. It doesn't matter which name is used since we are using 
+our own genome with the bin files. w303 has been chosen because it is also a yeast genome.  
+
+### V. Searching for Targets  
+
+Once the tables are loaded, we can start searching for (mis)matches of given gRNA within the genome.
+There are different options that are explained as follows:  
+
+* -i: input gRNA(s) or file of gRNA(s) (mandatory)
+* -f: flag indicating that we use a file (optional)
+* -p: used PAM (mandatory): G for NGG, A for NAG, C for NNNNACA and R for NNGRRT
+* -n: number of mismatches: \[0-5\] (mandatory)
+* -g: genome name: w303 (mandatory)
+* -t: path to bin table files (optional)
+* -o: path of output file (optional - shows in terminal if not given)
+* -m: memory option that has been used (optional)
+* -a: path of annotation files if used (optional)  
+
+If giving gRNA(s) with the command, they have to be separated by two '-' characters:  
+_ACTGTACGGTACTGCTGCTA--AGCTGTAACAACGTAACGATC_  
+Otherwise, it must be a list of gRNA(s) separated by new line characters within the file.  
+Example command:  
+./Results -i gRNA\_SEQUENCE(S) -pG -n5 -gw303 -o /output\_file.txt  
+or:  
+./Results -i /gRNA(s)\_file.txt -f -pG -n5 -gw303 -o /output\_file.txt  
+
+### VI. Output  
+
+The output file has different information separated by tabs. Each line represents one hit.
+It will return the following format:  
+* chromosome name (number)
+* strand
+* coordinate start
+* coordinate end
+* gRNA sequence (without PAM)
+* genomic hit with PAM and in lowercases: mismatches
+* number of mismatches
+* annotation info (optional)  
+
+### VII. Detaching Memory
+
+**_Important!_**  
+One has to detach the permanently loaded memory by using this command:  
+./Detach_Table -gw303
+
+
+
 
  
