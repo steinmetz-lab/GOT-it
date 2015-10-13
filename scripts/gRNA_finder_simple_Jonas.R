@@ -1,4 +1,19 @@
-design_basic_gRNA = function(genomeName, chr, start, end) {
+##################################################################################
+#
+#   simple R coding for finding possible gRNAs within a desired region
+#   
+#   input: -genomeName: e.g. "BSgenome.Scerevisiae.UCSC.sacCer3"
+#          -chr: chromosome, e.g. "chr02"
+#          -start: start of region, e.g. 4000
+#          -end: end of region, e.g. 4500
+#
+#   result: data frame with list and aditional information about the possible gRNAs
+#
+#  -Jonas, October 2015
+#
+###################################################################################
+
+design_simple_gRNA = function(genomeName, chr, start, end) {
   
   if(missing(genomeName)){
     stop("Name of the genome is missing.")
