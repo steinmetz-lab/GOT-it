@@ -180,29 +180,34 @@ design_simple_gRNA = function(genomeName, chr, start, end) {
       sequenceVector = sequenceRev
     }
     
-    finalDataFrame = data.frame(
-      chro=rep(chr, sapply(gRNA.seq,nrow)),
-      start=
-      if(count==1){
-        sequenceVector[unlist(sapply(gRNA.seq, "[","pStart"))]
-      } 
-      else if (count == 2){
-        sequenceVector[unlist(sapply(gRNA.seq, "[","pEnd"))]
-      },
-      end=
-      if(count==1){
-        sequenceVector[unlist(sapply(gRNA.seq, "[","pEnd"))]
-      } 
-      else if (count == 2){
-        sequenceVector[unlist(sapply(gRNA.seq, "[","pStart"))]
-      },
-      width=abs(sequenceVector[unlist(sapply(gRNA.seq, "[","pStart"))] - sequenceVector[unlist(sapply(gRNA.seq, "[","pEnd"))]) + 1,
-      strand=rep(strandSign, sapply(gRNA.seq,nrow)),
-      gRNA_Seq=unlist(sapply(gRNA.seq, "[","seq")),
-      gc=gcContent(unlist(sapply(gRNA.seq, "[","seq"))),
-      stringsAsFactors=FALSE)
-    
-    return(finalDataFrame)
+    ## handle if there are no results on the strand
+    if(!is.null(gRNA.seq[[1]])) {
+     
+      finalDataFrame = data.frame(
+        chro=rep(chr, sapply(gRNA.seq,nrow)),
+        start=
+          if(count==1){
+            sequenceVector[unlist(sapply(gRNA.seq, "[","pStart"))]
+          } 
+        else if (count == 2){
+          sequenceVector[unlist(sapply(gRNA.seq, "[","pEnd"))]
+        },
+        end=
+          if(count==1){
+            sequenceVector[unlist(sapply(gRNA.seq, "[","pEnd"))]
+          } 
+        else if (count == 2){
+          sequenceVector[unlist(sapply(gRNA.seq, "[","pStart"))]
+        },
+        width=abs(sequenceVector[unlist(sapply(gRNA.seq, "[","pStart"))] - sequenceVector[unlist(sapply(gRNA.seq, "[","pEnd"))]) + 1,
+        strand=rep(strandSign, sapply(gRNA.seq,nrow)),
+        gRNA_Seq=unlist(sapply(gRNA.seq, "[","seq")),
+        gc=gcContent(unlist(sapply(gRNA.seq, "[","seq"))),
+        stringsAsFactors=FALSE)
+      
+      return(finalDataFrame)
+      
+    }
     
   }))
   
